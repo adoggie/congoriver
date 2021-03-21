@@ -1,0 +1,40 @@
+from elabs.utils.useful import Timer
+from congoriver import CongoRiver
+
+class MyService(object):
+    def init_congo(self):
+        self.congo_timer = Timer(self.service_status,15)
+        cr = CongoRiver().init()
+        cr.set_confs('brokers/pub', config.CONGO_SERVICE['pub_url'])  # 设置发送目的zmq地址
+        cr.set_confs_local(service_type= config.CONGO_SERVICE['service_type'],
+                           service_id= config.CONGO_SERVICE['service_id'],
+                           name='first',
+                           version='0.1',
+                           ip=config.CONGO_SERVICE['ip'])
+        cr.set_confs('timers/heartbeat/interval', 0)  # 设置心跳时间
+        # cr.set_confs_topic('topics/status/pub','pub')
+        # cr.open()
+        return self
+
+
+	def run(self):
+	    CongoRiver().open()
+		while True:
+			events = dict(poller.poll(1000))
+			self.congo_timer.kick()
+
+
+    def service_status(self):
+        CongoRiver().send_status(status=1, detail='i am  okay')
+
+class Timer(object):
+  def __init__(self,userback ,interval,**args):
+    self.interval = interval
+    self.back = userback
+    self.start_time = time.time()
+    self.args = args
+
+  def kick(self):
+    if time.time() - self.start_time > self.interval:
+      self.back(**self.args)
+      self.start_time = time.time()

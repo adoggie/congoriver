@@ -1,0 +1,83 @@
+
+
+brokers:
+  pub: 'tcp://127.0.0.1:15556'
+  sub: 'tcp://127.0.0.1:15555'
+
+topics:
+  heartbeat:
+    url: '/el/svc/hb'
+    broker: 'pub'
+    pubsub: 'pub'
+    message:
+      type: 'heartbeat'
+      data: ''
+
+  logs:
+    url: '/el/svc/logs'
+    broker: 'pub'
+    pubsub: 'pub'
+    encoding: 'pickle'
+    message:
+      type: 'log'
+      level: ''
+      detail: ''
+
+  status:
+    url: '/el/svc/status'
+    broker: 'pub'
+    pubsub: 'pub'
+    message:
+      type: 'status'
+
+  alert:
+    url: '/el/svc/alert'
+    broker: 'pub'
+    pubsub: 'pub'
+    message:
+      type: 'alert'
+  peer:
+    url: '/el/svc/{service_type}/{service_id}'
+    broker: 'pub'
+    pubsub: 'pub'
+    message:
+      type: 'heartbeat'
+      data: ''
+
+  any:
+    url: '/el/svc/any'
+    broker: 'pub'
+    pubsub: 'pub'
+    encoding: 'pickle'
+    message:
+      type: 'any'
+      data: ''
+
+  unicast:
+    url: '/el/svc/{service_type}/{service_id}'
+    broker: 'sub'
+    pubsub: 'sub'
+
+  broadcast:
+    url: '/el/svc/{service_type}'
+    broker: 'sub'
+    pubsub: 'sub'
+
+timers:
+  heartbeat:
+    interval: 3
+    topic: 'heartbeat'
+    message:
+      data: ''
+      type: 'heartbeat'
+
+data_specs:
+  local:
+    name: ''
+    version: ''
+    service_type: ''
+    service_id: ''
+    start_time: ''
+    pid : 0
+    system_time: ''
+

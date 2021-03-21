@@ -1,0 +1,8 @@
+
+v0.4
+----------
+? threadsafe , add lock in Topic::send_data()
+? send_log(), message fields added : 'time','delta','category'
+? 'send_data()'  message add field : 'ver'
+? new feature: send_any() , data encoding type: json , pickle
+  py2.x, py3.x supported
